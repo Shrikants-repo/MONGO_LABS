@@ -1,0 +1,134 @@
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                                                                                                               Shrikant Sabde
+						           TE IT	
+					                                 ROLL NUMBER : TE IT 73	
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------Microsoft Windows [Version 10.0.19041.508]
+(c) 2020 Microsoft Corporation. All rights reserved.
+
+C:\Users\shrikant>cd C:\Program Files\MongoDB\Server\4.4\bin
+
+C:\Program Files\MongoDB\Server\4.4\bin>mongo
+MongoDB shell version v4.4.1
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("07128d60-65f1-4232-8f78-737da4f5f8c9") }
+MongoDB server version: 4.4.1
+---
+The server generated these startup warnings when booting:
+        2020-09-16T23:47:10.193+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+---
+---
+        Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+        metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+
+        The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+        and anyone you share the URL with. MongoDB may use this information to make product
+        improvements and to suggest MongoDB products and deployment options to you.
+
+        To enable free monitoring, run the following command: db.enableFreeMonitoring()
+        To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+---
+> use shrikant2
+switched to db shrikant2
+> db.student.find().pretty()
+{
+        "_id" : ObjectId("5f6c3d31b964f27b062be48c"),
+        "name" : "yogesh",
+        "id" : 1,
+        "branch" : "comp",
+        "class" : "SE",
+        "marks" : 60
+}
+{
+        "_id" : ObjectId("5f6c3d4eb964f27b062be48d"),
+        "name" : "rajesh",
+        "id" : 2,
+        "branch" : "it",
+        "class" : "SE",
+        "marks" : 70
+}
+{
+        "_id" : ObjectId("5f6c3d6db964f27b062be48e"),
+        "name" : "dinesh",
+        "id" : 3,
+        "branch" : "civil",
+        "class" : "TE",
+        "marks" : 80
+}
+{
+        "_id" : ObjectId("5f6c3d90b964f27b062be48f"),
+        "name" : "shrikant",
+        "id" : 4,
+        "branch" : "mechanical",
+        "class" : "FE",
+        "marks" : 40
+}
+> db.student.find({$where:function(){return this.branch=="comp"&& this.marks==60}}).pretty();
+{
+        "_id" : ObjectId("5f6c3d31b964f27b062be48c"),
+        "name" : "yogesh",
+        "id" : 1,
+        "branch" : "comp",
+        "class" : "SE",
+        "marks" : 60
+}
+> db.student.find().sort({name:1});
+{ "_id" : ObjectId("5f6c3d6db964f27b062be48e"), "name" : "dinesh", "id" : 3, "branch" : "civil", "class" : "TE", "marks" : 80 }
+{ "_id" : ObjectId("5f6c3d4eb964f27b062be48d"), "name" : "rajesh", "id" : 2, "branch" : "it", "class" : "SE", "marks" : 70 }
+{ "_id" : ObjectId("5f6c3d90b964f27b062be48f"), "name" : "shrikant", "id" : 4, "branch" : "mechanical", "class" : "FE", "marks" : 40 }
+{ "_id" : ObjectId("5f6c3d31b964f27b062be48c"), "name" : "yogesh", "id" : 1, "branch" : "comp", "class" : "SE", "marks" : 60 }
+> db.student.find().limit(2).pretty();
+{
+        "_id" : ObjectId("5f6c3d31b964f27b062be48c"),
+        "name" : "yogesh",
+        "id" : 1,
+        "branch" : "comp",
+        "class" : "SE",
+        "marks" : 60
+}
+{
+        "_id" : ObjectId("5f6c3d4eb964f27b062be48d"),
+        "name" : "rajesh",
+        "id" : 2,
+        "branch" : "it",
+        "class" : "SE",
+        "marks" : 70
+}
+>  db.student.find().skip(2).pretty();
+{
+        "_id" : ObjectId("5f6c3d6db964f27b062be48e"),
+        "name" : "dinesh",
+        "id" : 3,
+        "branch" : "civil",
+        "class" : "TE",
+        "marks" : 80
+}
+{
+        "_id" : ObjectId("5f6c3d90b964f27b062be48f"),
+        "name" : "shrikant",
+        "id" : 4,
+        "branch" : "mechanical",
+        "class" : "FE",
+        "marks" : 40
+}
+> var cursor=db.student.find();
+> cursor.forEach(function(x){print(x.name.fname);})
+[unknown type]
+[unknown type]
+[unknown type]
+[unknown type]
+> db.student.find({class:"FE"}).pretty();
+{
+        "_id" : ObjectId("5f6c3d90b964f27b062be48f"),
+        "name" : "shrikant",
+        "id" : 4,
+        "branch" : "mechanical",
+        "class" : "FE",
+        "marks" : 40
+}
+> db.student.find().sort({name:-1});
+{ "_id" : ObjectId("5f6c3d31b964f27b062be48c"), "name" : "yogesh", "id" : 1, "branch" : "comp", "class" : "SE", "marks" : 60 }
+{ "_id" : ObjectId("5f6c3d90b964f27b062be48f"), "name" : "shrikant", "id" : 4, "branch" : "mechanical", "class" : "FE", "marks" : 40 }
+{ "_id" : ObjectId("5f6c3d4eb964f27b062be48d"), "name" : "rajesh", "id" : 2, "branch" : "it", "class" : "SE", "marks" : 70 }
+{ "_id" : ObjectId("5f6c3d6db964f27b062be48e"), "name" : "dinesh", "id" : 3, "branch" : "civil", "class" : "TE", "marks" : 80 }
+> db.student.find({"$query":{name:"shrikant"},$orderby":{id=-1}}).pretty();
+uncaught exception: SyntaxError: "" literal n

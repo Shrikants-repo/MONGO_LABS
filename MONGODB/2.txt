@@ -1,0 +1,200 @@
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                                                                                                               Shrikant Sabde
+						           TE IT	
+					                                 ROLL NUMBER : TE IT 73	
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+> use shrikant1
+switched to db shrikant1
+> db.student.insert({'name':'john','id':1,'branch':'computer','class':'BE'})
+WriteResult({ "nInserted" : 1 })
+> db.student.insert({'name':'shrikant','id':2,'branch':'civil','class':'TE'})
+WriteResult({ "nInserted" : 1 })
+> db.student.insert({'name':'shreyash','id':3,'branch':'dinesh','class':'TE'})
+WriteResult({ "nInserted" : 1 })
+> db.student.insert({'name':'yogesh','id':4,'branch':'ramu','class':'SE'})
+WriteResult({ "nInserted" : 1 })
+> db.student.find()
+{ "_id" : ObjectId("5f6c3ab6b964f27b062be488"), "name" : "john", "id" : 1, "branch" : "computer", "class" : "BE" }
+{ "_id" : ObjectId("5f6c3aedb964f27b062be489"), "name" : "shrikant", "id" : 2, "branch" : "civil", "class" : "TE" }
+{ "_id" : ObjectId("5f6c3b11b964f27b062be48a"), "name" : "shreyash", "id" : 3, "branch" : "dinesh", "class" : "TE" }
+{ "_id" : ObjectId("5f6c3b35b964f27b062be48b"), "name" : "yogesh", "id" : 4, "branch" : "ramu", "class" : "SE" }
+> db.student.find().pretty
+function() {
+    this._prettyShell = true;
+    return this;
+}
+> db.student.find.pretty()
+uncaught exception: TypeError: db.student.find.pretty is not a function :
+@(shell):1:1
+> db.student.find().pretty()
+{
+        "_id" : ObjectId("5f6c3ab6b964f27b062be488"),
+        "name" : "john",
+        "id" : 1,
+        "branch" : "computer",
+        "class" : "BE"
+}
+{
+        "_id" : ObjectId("5f6c3aedb964f27b062be489"),
+        "name" : "shrikant",
+        "id" : 2,
+        "branch" : "civil",
+        "class" : "TE"
+}
+{
+        "_id" : ObjectId("5f6c3b11b964f27b062be48a"),
+        "name" : "shreyash",
+        "id" : 3,
+        "branch" : "dinesh",
+        "class" : "TE"
+}
+{
+        "_id" : ObjectId("5f6c3b35b964f27b062be48b"),
+        "name" : "yogesh",
+        "id" : 4,
+        "branch" : "ramu",
+        "class" : "SE"
+}
+> db.student.findone()
+uncaught exception: TypeError: db.student.findone is not a function :
+@(shell):1:1
+> db.student.findOne()
+{
+        "_id" : ObjectId("5f6c3ab6b964f27b062be488"),
+        "name" : "john",
+        "id" : 1,
+        "branch" : "computer",
+        "class" : "BE"
+}
+> db.student.find({or:[{marks:{$lt:60}}]})
+> use shrikant1
+switched to db shrikant1
+> db.student.find()
+{ "_id" : ObjectId("5f6c3ab6b964f27b062be488"), "name" : "john", "id" : 1, "branch" : "computer", "class" : "BE" }
+{ "_id" : ObjectId("5f6c3aedb964f27b062be489"), "name" : "shrikant", "id" : 2, "branch" : "civil", "class" : "TE" }
+{ "_id" : ObjectId("5f6c3b11b964f27b062be48a"), "name" : "shreyash", "id" : 3, "branch" : "dinesh", "class" : "TE" }
+{ "_id" : ObjectId("5f6c3b35b964f27b062be48b"), "name" : "yogesh", "id" : 4, "branch" : "ramu", "class" : "SE" }
+> use shrikant2
+switched to db shrikant2
+> db.student.insert({'name':'yogesh','id':1,'branch':'comp','class':'SE','marks':60})
+WriteResult({ "nInserted" : 1 })
+> db.student.insert({'name':'rajesh','id':2,'branch':'it','class':'SE','marks':70})
+WriteResult({ "nInserted" : 1 })
+> db.student.insert({'name':'dinesh','id':3,'branch':'civil','class':'TE','marks':80})
+WriteResult({ "nInserted" : 1 })
+> db.student.insert({'name':'shrikant','id':4,'branch':'mechanical','class':'FE','marks':40})
+WriteResult({ "nInserted" : 1 })
+> db.student.find().pretty()
+{
+        "_id" : ObjectId("5f6c3d31b964f27b062be48c"),
+        "name" : "yogesh",
+        "id" : 1,
+        "branch" : "comp",
+        "class" : "SE",
+        "marks" : 60
+}
+{
+        "_id" : ObjectId("5f6c3d4eb964f27b062be48d"),
+        "name" : "rajesh",
+        "id" : 2,
+        "branch" : "it",
+        "class" : "SE",
+        "marks" : 70
+}
+{
+        "_id" : ObjectId("5f6c3d6db964f27b062be48e"),
+        "name" : "dinesh",
+        "id" : 3,
+        "branch" : "civil",
+        "class" : "TE",
+        "marks" : 80
+}
+{
+        "_id" : ObjectId("5f6c3d90b964f27b062be48f"),
+        "name" : "shrikant",
+        "id" : 4,
+        "branch" : "mechanical",
+        "class" : "FE",
+        "marks" : 40
+}
+> db.student.find({or:[{marks:{$lt:60}}]})
+> use shrikant2
+switched to db shrikant2
+> db.student.find()
+{ "_id" : ObjectId("5f6c3d31b964f27b062be48c"), "name" : "yogesh", "id" : 1, "branch" : "comp", "class" : "SE", "marks" : 60 }
+{ "_id" : ObjectId("5f6c3d4eb964f27b062be48d"), "name" : "rajesh", "id" : 2, "branch" : "it", "class" : "SE", "marks" : 70 }
+{ "_id" : ObjectId("5f6c3d6db964f27b062be48e"), "name" : "dinesh", "id" : 3, "branch" : "civil", "class" : "TE", "marks" : 80 }
+{ "_id" : ObjectId("5f6c3d90b964f27b062be48f"), "name" : "shrikant", "id" : 4, "branch" : "mechanical", "class" : "FE", "marks" : 40 }
+> db.student.find({$and:[{'marks':80},{'name':'dinesh'}]})
+{ "_id" : ObjectId("5f6c3d6db964f27b062be48e"), "name" : "dinesh", "id" : 3, "branch" : "civil", "class" : "TE", "marks" : 80 }
+> db.student.find({$and:[{'marks':60},{'name':'yogesh'}]}).pretty()
+{
+        "_id" : ObjectId("5f6c3d31b964f27b062be48c"),
+        "name" : "yogesh",
+        "id" : 1,
+        "branch" : "comp",
+        "class" : "SE",
+        "marks" : 60
+}
+> db.student.find({$nor:[{'marks':40},{'name':'shrikant'}]})
+{ "_id" : ObjectId("5f6c3d31b964f27b062be48c"), "name" : "yogesh", "id" : 1, "branch" : "comp", "class" : "SE", "marks" : 60 }
+{ "_id" : ObjectId("5f6c3d4eb964f27b062be48d"), "name" : "rajesh", "id" : 2, "branch" : "it", "class" : "SE", "marks" : 70 }
+{ "_id" : ObjectId("5f6c3d6db964f27b062be48e"), "name" : "dinesh", "id" : 3, "branch" : "civil", "class" : "TE", "marks" : 80 }
+> db.student.find({$nor:[{'marks':{"$lt"70,"$gt":90}})
+... db.
+... ^C
+
+> > db.student.find({"marks":{"$lt"70,"$gt":90}})
+uncaught exception: SyntaxError: expected expression, got '>' :
+@(shell):1:0
+> use shrikant2
+switched to db shrikant2
+> > db.student.find({"marks":{"$lt"70,"$gt":90}})
+uncaught exception: SyntaxError: expected expression, got '>' :
+@(shell):1:0
+> > db.student.find({"marks":{"$lt":70,"$gt":90}})
+uncaught exception: SyntaxError: expected expression, got '>' :
+@(shell):1:0
+> > db.student.find({'marks':{"$lt":70,"$gt":90}})
+uncaught exception: SyntaxError: expected expression, got '>' :
+@(shell):1:0
+> > db.student.find({'marks':{"$lt":90,"$gt":60}})
+uncaught exception: SyntaxError: expected expression, got '>' :
+@(shell):1:0
+> nch ":"etc","class":"SE","marks":65}
+uncaught exception: SyntaxError: unexpected token: string literal :
+@(shell):1:4
+> db.student.find({'marks':{"$lt":90,"$gt":60}});
+{ "_id" : ObjectId("5f6c3d4eb964f27b062be48d"), "name" : "rajesh", "id" : 2, "branch" : "it", "class" : "SE", "marks" : 70 }
+{ "_id" : ObjectId("5f6c3d6db964f27b062be48e"), "name" : "dinesh", "id" : 3, "branch" : "civil", "class" : "TE", "marks" : 80 }
+> db.student.find({'marks':{"$gt":60}});
+{ "_id" : ObjectId("5f6c3d4eb964f27b062be48d"), "name" : "rajesh", "id" : 2, "branch" : "it", "class" : "SE", "marks" : 70 }
+{ "_id" : ObjectId("5f6c3d6db964f27b062be48e"), "name" : "dinesh", "id" : 3, "branch" : "civil", "class" : "TE", "marks" : 80 }
+> db.student.find({'marks':{"$lt":80}});
+{ "_id" : ObjectId("5f6c3d31b964f27b062be48c"), "name" : "yogesh", "id" : 1, "branch" : "comp", "class" : "SE", "marks" : 60 }
+{ "_id" : ObjectId("5f6c3d4eb964f27b062be48d"), "name" : "rajesh", "id" : 2, "branch" : "it", "class" : "SE", "marks" : 70 }
+{ "_id" : ObjectId("5f6c3d90b964f27b062be48f"), "name" : "shrikant", "id" : 4, "branch" : "mechanical", "class" : "FE", "marks" : 40 }
+> db.student.find({"marks":{$in":[40,80]}}).pretty();
+uncaught exception: SyntaxError: "" literal not terminated before end of script :
+@(shell):1:51
+> db.student.find({"marks":{"$in":[40,80]}}).pretty();
+{
+        "_id" : ObjectId("5f6c3d6db964f27b062be48e"),
+        "name" : "dinesh",
+        "id" : 3,
+        "branch" : "civil",
+        "class" : "TE",
+        "marks" : 80
+}
+{
+        "_id" : ObjectId("5f6c3d90b964f27b062be48f"),
+        "name" : "shrikant",
+        "id" : 4,
+        "branch" : "mechanical",
+        "class" : "FE",
+        "marks" : 40
+}
+> ^C
+bye
+
+C:\Program Files\MongoDB\Server\4.4\bin>

@@ -1,0 +1,86 @@
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                                                                                                               Shrikant Sabde
+						           TE IT	
+					                                 ROLL NUMBER : TE IT 73	
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+> use mongo;
+switched to mongo
+> db.createCollection("Student")
+{ "ok" : 1 }
+> show collections;
+Student
+> db.Student.insert({"Roll_no":"1","Name":"Shrikant","Percentage":"80"});
+WriteResult({ "nInserted" : 1 })
+> db.Student.insert({"Roll_no":"2","Name":"Shreyash","Percentage":"84"});
+WriteResult({ "nInserted" : 1 })
+> db.Student.insert({"Roll_no":"3","Name":"yogu","Percentage":"70"});
+WriteResult({ "nInserted" : 1 })
+> db.Student.insert({"Roll_no":"4","Name":"Ram","Percentage":"80"});
+WriteResult({ "nInserted" : 1 })
+> db.Student.find();
+{ "_id" : ObjectId("5f62fec296e035469cbb1709"), "Roll_no" : "1", "Name" : "Shrikant", "Percentage" : "80" }
+{ "_id" : ObjectId("5f62fee496e035469cbb170a"), "Roll_no" : "2", "Name" : "Shreyash", "Percentage" : "84" }
+{ "_id" : ObjectId("5f62fef296e035469cbb170b"), "Roll_no" : "3", "Name" : "yogu", "Percentage" : "70" }
+{ "_id" : ObjectId("5f62ff0796e035469cbb170c"), "Roll_no" : "4", "Name" : "Ram", "Percentage" : "80" }
+> db.student.find().pretty();
+> db.Student.find().pretty();
+{
+        "_id" : ObjectId("5f62fec296e035469cbb1709"),
+        "Roll_no" : "1",
+        "Name" : "Shrikant",
+        "Percentage" : "80"
+}
+{
+        "_id" : ObjectId("5f62fee496e035469cbb170a"),
+        "Roll_no" : "2",
+        "Name" : "Shreyash",
+        "Percentage" : "84"
+}
+{
+        "_id" : ObjectId("5f62fef296e035469cbb170b"),
+        "Roll_no" : "3",
+        "Name" : "yogu",
+        "Percentage" : "70"
+}
+{
+        "_id" : ObjectId("5f62ff0796e035469cbb170c"),
+        "Roll_no" : "4",
+        "Name" : "Ram",
+        "Percentage" : "80"
+}
+> db.Student.update({"Name":"yogu"},{$set:{"Name":"RAJ"}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.Student.find();
+{ "_id" : ObjectId("5f62fec296e035469cbb1709"), "Roll_no" : "1", "Name" : "Shrikant", "Percentage" : "80" }
+{ "_id" : ObjectId("5f62fee496e035469cbb170a"), "Roll_no" : "2", "Name" : "Shreyash", "Percentage" : "84" }
+{ "_id" : ObjectId("5f62fef296e035469cbb170b"), "Roll_no" : "3", "Name" : "RAJ", "Percentage" : "70" }
+{ "_id" : ObjectId("5f62ff0796e035469cbb170c"), "Roll_no" : "4", "Name" : "Ram", "Percentage" : "80" }
+> db.Student.remove({"Name":"Shreyash"})
+WriteResult({ "nRemoved" : 1 })
+> db.Student.find();
+{ "_id" : ObjectId("5f62fec296e035469cbb1709"), "Roll_no" : "1", "Name" : "Shrikant", "Percentage" : "80" }
+{ "_id" : ObjectId("5f62fef296e035469cbb170b"), "Roll_no" : "3", "Name" : "RAJ", "Percentage" : "70" }
+{ "_id" : ObjectId("5f62ff0796e035469cbb170c"), "Roll_no" : "4", "Name" : "Ram", "Percentage" : "80" }
+
+> db.Student.insert(
+... [
+... {"Roll_no":"5","Name":"RUTUJA","Percentage:"60"},
+... {"Roll_no":"6","Name":"PRIYA","Percentage":"70"},
+... ])
+BulkWriteResult({
+        "writeErrors" : [ ],
+        "writeConcernErrors" : [ ],
+        "nInserted" : 2,
+        "nUpserted" : 0,
+        "nMatched" : 0,
+        "nModified" : 0,
+        "nRemoved" : 0,
+        "upserted" : [ ]
+})
+> db.Student.find();
+{ "_id" : ObjectId("5f62fec296e035469cbb1709"), "Roll_no" : "1", "Name" : "Shrikant", "Percentage" : "80" }
+{ "_id" : ObjectId("5f62fef296e035469cbb170b"), "Roll_no" : "3", "Name" : "RAJ", "Percentage" : "70" }
+{ "_id" : ObjectId("5f62ff0796e035469cbb170c"), "Roll_no" : "4", "Name" : "Ram", "Percentage" : "80" }
+{ "_id" : ObjectId("5f6980018f94589e0a9a7068"), "Roll_no" : "5", "Name" : "RUTUJA", "Percentage" : "60" }
+{ "_id" : ObjectId("5f6980018f94589e0a9a7069"), "Roll_no" : "6", "Name" : "PRIYA", "Percentage" : "70" }
+

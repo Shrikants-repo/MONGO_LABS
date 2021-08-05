@@ -1,0 +1,73 @@
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                                                                                                               Shrikant Sabde
+						           TE IT	
+					                                 ROLL NUMBER : TE IT 73	
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+> use dbms;
+switched to db dbms;
+> db.student.insert({"RollN":"C1","marks":"90","grade":"A"});
+WriteResult({ "nInserted" : 1 })
+> db.student.insert({"RollN":"C1","marks":"85","grade":"A"});
+WriteResult({ "nInserted" : 1 })
+> db.student.insert({"RollN":"D1","marks":"81","grade":"A"});
+WriteResult({ "nInserted" : 1 })
+> db.student.insert({"RollN":"C1","marks":"60","grade":"D"});
+WriteResult({ "nInserted" : 1 })
+> db.student.find()
+{ "_id" : ObjectId("5f7abd9e10d6008808ce40e9"), "RollN" : "C1", "marks" : "90", "grade" : "A" }
+{ "_id" : ObjectId("5f7abdb010d6008808ce40ea"), "RollN" : "C1", "marks" : "85", "grade" : "A" }
+{ "_id" : ObjectId("5f7abdd110d6008808ce40eb"), "RollN" : "D1", "marks" : "81", "grade" : "A" }
+{ "_id" : ObjectId("5f7abde510d6008808ce40ec"), "RollN" : "C1", "marks" : "60", "grade" : "D" }
+> db.student.mapReduce(function(){emit(this.RollN,this.marks);},function(key, values) {return Array.sum( values)},{query:{"grade":"A"},out: "marktot"})
+{ "result" : "marktot", "ok" : 1 }
+> var mapFunc1 = function(){emit(this.RollN,this.marks);};
+> var reduceFunc1 = function(keyCustID,valuePrices){return Array.sum(valuePrices);};
+> db.student.mapReduce(mapFunc1,reduceFunc1,{out:"ALL"})
+{ "result" : "ALL", "ok" : 1 }
+> db.marktot.find()
+{ "_id" : "D1", "value" : "81" }
+{ "_id" : "C1", "value" : "8590" }
+> db.ALL.find()
+{ "_id" : "D1", "value" : "81" }
+{ "_id" : "C1", "value" : "608590" }
+
+> use order
+switched to db order
+> db.cust_order.insert({id: 1,cust_id:"shrikant",price:60, items:[{product:"gelpens",quantity:10,price:5.0},{product:"ink",quantity:1,price:10.0}]});
+WriteResult({ "nInserted" : 1 })
+> db.cust_order.insert([
+... {id: 2,cust_id:"shrikant",price:30, items:[{product:"notebook",quantity:2,price:5.0},{product:"pad",quantity:1,price:20.0}]},
+... {id: 3,cust_id:"shreyash",price:130, items:[{product:"inkpens",quantity:2,price:50.0},{product:"ink",quantity:3,price:10.0}]},
+... {id: 4,cust_id:"shreyash",price:70, items:[{product:"ballpen",quantity:2,price:20.0},{product:"sheets",quantity:2,price:15.0}]},
+... {id: 5,cust_id:"rutuja",price:120, items:[{product:"calci",quantity:1,price:100.0},{product:"cells",quantity:1,price:20.0}]},
+... {id: 6,cust_id:"rutuja",price:130, items:[{product:"sketchpens",quantity:10,price:10.0},{product:"book",quantity:2,price:30.0}]},
+... ]);
+BulkWriteResult({
+        "writeErrors" : [ ],
+        "writeConcernErrors" : [ ],
+        "nInserted" : 5,
+        "nUpserted" : 0,
+        "nMatched" : 0,
+        "nModified" : 0,
+        "nRemoved" : 0,
+        "upserted" : [ ]
+})
+> var reduceFunction = function(Customer_id, Price) {
+... return Array.sum(Price);
+... };
+> db.cust_order.mapReduce( mapFunction,reduceFunction,{out : "reduce"})
+{
+        "result" : "reduce",
+        "timeMillis" : 462,
+        "counts" : {
+                "input" : 6,
+                "emit" : 6,
+                "reduce" : 3,
+                "output" : 3
+        },
+        "ok" : 1
+}
+> db.reduce.find().pretty()
+{ "_id" : "rutuja", "value" : 250 }
+{ "_id" : "shreyash", "value" : 200 }
+{ "_id" : "shrikant", "value" : 90 }

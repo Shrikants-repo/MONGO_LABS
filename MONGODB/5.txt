@@ -1,0 +1,105 @@
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                                                                                                               Shrikant Sabde
+						           TE IT	
+					                                 ROLL NUMBER : TE IT 73	
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+> use dbms;
+switched to db dbms
+> db.createCollection("student")
+{ "ok" : 1 }
+> db.student.insert([
+... {name:"Shrikant",rollno:"1",batch:"IT",credit:8.8},
+... {name:"Shreyash",rollno:"2",batch:"IT",credit:9.4},
+... {name:"Rutuja",rollno:"3",batch:"IT",credit:7.5},
+... {name:"Ram",rollno:"4",batch:"IT",credit:7.8},
+... ]);
+BulkWriteResult({
+        "writeErrors" : [ ],
+        "writeConcernErrors" : [ ],
+        "nInserted" : 4,
+        "nUpserted" : 0,
+        "nMatched" : 0,
+        "nModified" : 0,
+        "nRemoved" : 0,
+        "upserted" : [ ]
+})
+> db.student.find().pretty();
+{
+        "_id" : ObjectId("5f68498ad270133c4c90808c"),
+        "name" : "Shrikant",
+        "rollno" : "1",
+        "batch" : "IT",
+        "credit" : 8.8
+}
+{
+        "_id" : ObjectId("5f6aea0a5a9d4c21404ba23b"),
+        "name" : "Shreyash",
+        "rollno" : "2",
+        "batch" : "IT",
+        "credit" : 9.4
+}
+{
+        "_id" : ObjectId("5f6aea495a9d4c21404ba23e"),
+        "name" : "Rutuja",
+        "rollno" : "3",
+        "batch" : "IT",
+        "credit" : 7.5
+}
+{
+        "_id" : ObjectId("5f6af1945a9d4c21404ba240"),
+        "name" : "Ram",
+        "rollno" : "4",
+        "batch" : "IT",
+        "credit" : 7.8
+}
+
+> db.student.aggregate([{$group:{_id:"$batch",Average:{$avg:"$credit"}}}]);
+{ "_id" : "IT", "Average" : 8.37 }
+> db.student.aggregate([{$group:{_id:"$batch",Max:{$max:"$credit"}}}]);
+{ "_id" : "IT", "Max" : 9.4 }
+> db.student.aggregate([{$group:{_id:"$batch",Min:{$min:"$credit"}}}]);
+{ "_id" : "IT", "Min" : 7.5 }
+> db.student.aggregate([{$group:{_id:"$batch",Sum:{$sum:"$credit"}}}]);
+{ "_id" : "IT", "Sum" : 33.5 }
+> db.student.aggregate([{$group:{_id:"$batch",LastDoc:{$last:"$credit"}}}]);
+{ "_id" : "IT", "LastDoc" : 7.8 }
+> db.student.aggregate([{$group:{_id:"$batch",FirstDoc:{$first:"$credit"}}}]);
+{ "_id" : "IT", "FirstDoc" : 8.8 }
+> db.student.aggregate({"$project":{"name":1,"credit":-1}},{$sort:{"credit":-1}},{$limit:2})
+{ "_id" : ObjectId("5f6aea0a5a9d4c21404ba23b"), "name" : "Shreyash", "credit" : 9.4 }
+{ "_id" : ObjectId("5f68498ad270133c4c90808c"), "name" : "Shrikant", "credit" : 8.8 }
+> db.student.aggregate({"$project":{"name":1,"credit":-1}},{$sort:{"credit":-1}},{$skip:1},{$limit:2})
+{ "_id" : ObjectId("5f68498ad270133c4c90808c"), "name" : "Shrikant", "credit" : 8.8 }
+{ "_id" : ObjectId("5f6af1945a9d4c21404ba240"), "name" : "Ram", "credit" : 7.8 }
+> db.student.find({name:"Shrikant"}).explain()
+{
+        "queryPlanner" : {
+                "plannerVersion" : 1,
+                "namespace" : "dbms.student",
+                "indexFilterSet" : false,
+                "parsedQuery" : {
+                        "name" : {
+                                "$eq" : "Shrikant"
+                        }
+                },
+                "queryHash" : "01PWW5WE",
+                "planCacheKey" : "01PWW5WE",
+                "winningPlan" : {
+                        "stage" : "COLLSCAN",
+                        "filter" : {
+                                "name" : {
+                                        "$eq" : "Shrikant"
+                                }
+                        },
+                        "direction" : "forward"
+                },
+                "rejectedPlans" : [ ]
+        },
+        "serverInfo" : {
+                "host" : "LAPTOP-5CGI8PIR",
+                "port" : 28014,
+                "version" : "4.4.1",
+                "gitVersion" : "sf88a93a5a31e175f5cbf8c69561e1633as0s1d"
+        },
+        "ok" : 1
+}
